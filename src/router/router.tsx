@@ -5,10 +5,15 @@ import SplashScreen from "../pages/SplashScreen/SplashScreen";
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
-import Dashboard from "../pages/Dashboard/Dashboard";
+import ClassDetails from "../pages/Class/ClassDetails";
+import Search from "../pages/Search/Search";
+import Schedule from "../pages/Schedule/Schedule";
+
+
 import Users from "../pages/Users/Users";
 import NotFound from "../pages/NotFound/NotFound";
 import ProtectedRoute from "../components/ProtectedRoute/ProtectedRoute";
+
 
 export const router = createBrowserRouter([
   {
@@ -25,6 +30,15 @@ export const router = createBrowserRouter([
         handle: { title: "Popular Classes" },
       },
       {
+        path: "/class/:id",
+        element: <ClassDetails/>,
+      },
+      {
+        path: "/search",
+        element: <Search />,
+        handle: { title: "search" },
+      },
+      {
         path: "/login",
         element: <Login />,
         handle: { title: "Login" },
@@ -38,9 +52,9 @@ export const router = createBrowserRouter([
         element: <ProtectedRoute />,
         children: [
           {
-            path: "/dashboard",
-            element: <Dashboard />,
-            handle: { title: "Dashboard" },
+            path: "/mySchedule",
+            element: <Schedule />,
+            handle: { title: "My Schedule" },
           },
           {
             path: "/users",

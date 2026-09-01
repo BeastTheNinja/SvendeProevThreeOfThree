@@ -1,60 +1,97 @@
-
-
 .NavbarStyles {
+  position: relative;
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  background-color: white;
-  margin: 0 auto;
-  div {
-    display: flex;
-    gap: 1rem;
-    margin: 0 auto;
-    option {
-      border-color: greenyellow;
-    }
-    button {
-      background-color: cyan;
-      border: none;
-    }
+  background: #fff;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.LeftSection,
+.RightSection {
+  display: flex;
+  align-items: center;
+  min-width: 48px;
+}
+
+.TitleSection {
+  flex: 1;
+  text-align: center;
+
+  h1 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 700;
   }
 }
 
-.AccountMenu {
-  position: relative;
+.BackButton {
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+
+  img {
+    width: 24px;
+    height: 24px;
+  }
 }
 
 .AccountButton {
-  padding: 0;
   background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  cursor: pointer;
+
+  img {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+.Overlay {
+  position: fixed;
+  inset: 0;
+  background: rgb(0 0 0 / 70%);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.MenuContent {
+  position: relative;
+  width: min(90vw, 420px);
+  background: #fff;
+  border-radius: 18px;
+  padding: 2rem 1.25rem 1.25rem;
+  box-shadow: 0 20px 40px rgb(0 0 0 / 20%);
+}
+
+.CloseButton {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: transparent;
   border: none;
+  font-size: 2rem;
   cursor: pointer;
 }
 
-.AccountDropdown {
-  position: absolute;
-  top: 3rem;
-  right: 0;
-  z-index: 10;
+.NavLinks {
   display: flex;
   flex-direction: column;
-  min-width: 150px;
-  gap: 0.5rem;
-  padding: 0.75rem;
-  background: white;
-  border: 1px solid #ddd;
-  box-shadow: 0 4px 12px rgb(0 0 0 / 15%);
+  gap: 0.75rem;
 
   button {
     width: 100%;
-    padding: 0.5rem;
+    justify-content: flex-start;
+    padding: 0.9rem 1rem;
+    border-radius: 10px;
+    background: #f3f4f6;
     border: none;
-    background: transparent;
-    color: #333;
+    font-size: 1rem;
     cursor: pointer;
-    text-align: left;
-
-    &:hover {
-      background-color: #f2f2f2;
-    }
   }
 }

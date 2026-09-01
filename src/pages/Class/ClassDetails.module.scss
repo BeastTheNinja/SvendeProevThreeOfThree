@@ -1,0 +1,88 @@
+.classDetails {
+  background: #f6f6f6;
+  min-height: 100vh;
+}
+
+.hero {
+  position: relative;
+  width: 100%;
+  height: 78vh;
+  min-height: 420px;
+  overflow: hidden;
+}
+
+.heroImage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.heroOverlay {
+  position: absolute;
+  left: 16px;
+  bottom: 20px;
+  z-index: 2;
+}
+
+.heroOverlay h1 {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(2rem, 7vw, 4rem);
+  line-height: 1;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.45);
+}
+
+.content {
+  padding: 20px 16px 32px;
+}
+
+.schedule {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
+  font-weight: 600;
+}
+
+.trainer {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
+}
+
+.trainer img {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.trainer p {
+  margin: 6px 0 0;
+  color: #555;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.button {
+  width: 100%;
+  border: none;
+  background: #111;
+  color: #fff;
+  border-radius: 14px;
+  padding: 16px;
+  font-size: 1rem;
+  font-weight: 700;
+}
