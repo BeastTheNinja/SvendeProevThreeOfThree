@@ -8,9 +8,6 @@ import Register from "../pages/Register/Register";
 import ClassDetails from "../pages/Class/ClassDetails";
 import Search from "../pages/Search/Search";
 import Schedule from "../pages/Schedule/Schedule";
-
-
-import Users from "../pages/Users/Users";
 import NotFound from "../pages/NotFound/NotFound";
 import ProtectedRoute from "../components/ProtectedRoute/ProtectedRoute";
 
@@ -55,11 +52,6 @@ export const router = createBrowserRouter([
             path: "/mySchedule",
             element: <Schedule />,
             handle: { title: "My Schedule" },
-          },
-          {
-            path: "/users",
-            element: <Users />,
-            handle: { title: "Users" },
           },
         ],
       },
