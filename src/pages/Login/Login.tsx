@@ -1,41 +1,66 @@
-import {
-  useState,
-} from "react";
-import type { FormEvent } from "react";
-
+import { useState } from "react";
 import { useNavigate, useLocation } from "react-router";
-
 import Input from "../../components/Input/Input";
 import Loading from "../../components/Loading/Loading";
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
-
+import useForm from "../../hooks/useForm";
 import { login } from "../../services/auth.service";
+import styles from "./Login.module.scss";
+
+type LoginValues = {
+  username: string;
+  password: string;
+};
 
 function Login() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const returnTo = (location.state as { returnTo?: string } | null)?.returnTo ?? "/home";
+  const returnTo =
+    (location.state as { returnTo?: string } | null)?.returnTo ?? "/home";
 
-  const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState("");
+  const { values, errors, handleChange, validateForm } = useForm<LoginValues>({
+    initialValues: {
+      username: "",
+      password: "",
+    },
+    validate: ({ username, password }) => {
+      const validationErrors: Partial<Record<keyof LoginValues, string>> = {};
+
+      if (!username.trim()) {
+        validationErrors.username = "Username is required.";
+      }
+
+      if (!password) {
+        validationErrors.password = "Password is required.";
+      } else if (password.length < 6) {
+        validationErrors.password = "Password must be at least 6 characters.";
+      }
+
+      return validationErrors;
+    },
+  });
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
 
     setLoading(true);
     setError("");
 
     try {
       await login({
-        username: userName,
-        password,
+        username: values.username,
+        password: values.password,
       });
 
       window.dispatchEvent(new CustomEvent("auth-change", { detail: true }));
-
       navigate(returnTo, { replace: true });
     } catch {
       setError("Invalid username or password.");
@@ -49,35 +74,62 @@ function Login() {
   }
 
   return (
-    <section>
-      <h1>Login</h1>
+    <section className={styles.page}>
+      <div className={styles.card}>
+        <h1 className={styles.title}>Login</h1>
 
-      {error && <ErrorMessage message={error} />}
+        {error && (
+          <div className={styles.serverError}>
+            <ErrorMessage message={error} />
+          </div>
+        )}
 
-      <form onSubmit={handleSubmit}>
-        <Input
-          id="username"
-          name="username"
-          label="Username"
-          type="text"
-          value={userName}
-          onChange={(event) => setUserName(event.target.value)}
-          required
-        />
+        <form onSubmit={handleSubmit} noValidate className={styles.form}>
+          <div className={styles.fieldGroup}>
+            <label htmlFor="username" className={styles.label}>
+              Username
+            </label>
+            <Input
+              id="username"
+              name="username"
+              type="text"
+              value={values.username}
+              onChange={handleChange}
+              aria-invalid={Boolean(errors.username)}
+              className={styles.input}
+            />
+            {errors.username && (
+              <p className={styles.error} role="alert">
+                {errors.username}
+              </p>
+            )}
+          </div>
 
-        <Input
-          id="password"
-          name="password"
-          label="Password"
-          type="password"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-          required
-        />
+          <div className={styles.fieldGroup}>
+            <label htmlFor="password" className={styles.label}>
+              Password
+            </label>
+            <Input
+              id="password"
+              name="password"
+              type="password"
+              value={values.password}
+              onChange={handleChange}
+              aria-invalid={Boolean(errors.password)}
+              className={styles.input}
+            />
+            {errors.password && (
+              <p className={styles.error} role="alert">
+                {errors.password}
+              </p>
+            )}
+          </div>
 
-        <input type="submit" value="login" />
-
-      </form>
+          <button type="submit" className={styles.submitButton}>
+            Login
+          </button>
+        </form>
+      </div>
     </section>
   );
 }
