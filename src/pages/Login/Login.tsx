@@ -3,8 +3,7 @@ import {
 } from "react";
 import type { FormEvent } from "react";
 
-import { useNavigate } from "react-router";
-
+import { useNavigate, useLocation } from "react-router";
 
 import Input from "../../components/Input/Input";
 import Loading from "../../components/Loading/Loading";
@@ -14,16 +13,16 @@ import { login } from "../../services/auth.service";
 
 function Login() {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const returnTo = (location.state as { returnTo?: string } | null)?.returnTo ?? "/home";
 
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  async function handleSubmit(
-    event: FormEvent<HTMLFormElement>
-  ) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     setLoading(true);
@@ -35,14 +34,9 @@ function Login() {
         password,
       });
 
-      window.dispatchEvent(
-        new CustomEvent("auth-change", {
-          detail: true,
-        })
-      );
+      window.dispatchEvent(new CustomEvent("auth-change", { detail: true }));
 
-      navigate("/profil");
-
+      navigate(returnTo, { replace: true });
     } catch {
       setError("Invalid username or password.");
     } finally {
@@ -51,18 +45,14 @@ function Login() {
   }
 
   if (loading) {
-    return (
-      <Loading message="Logging in..." />
-    );
+    return <Loading message="Logging in..." />;
   }
 
   return (
     <section>
       <h1>Login</h1>
 
-      {error && (
-        <ErrorMessage message={error} />
-      )}
+      {error && <ErrorMessage message={error} />}
 
       <form onSubmit={handleSubmit}>
         <Input
@@ -71,9 +61,7 @@ function Login() {
           label="Username"
           type="text"
           value={userName}
-          onChange={(event) =>
-            setUserName(event.target.value)
-          }
+          onChange={(event) => setUserName(event.target.value)}
           required
         />
 
@@ -83,9 +71,7 @@ function Login() {
           label="Password"
           type="password"
           value={password}
-          onChange={(event) =>
-            setPassword(event.target.value)
-          }
+          onChange={(event) => setPassword(event.target.value)}
           required
         />
 
