@@ -37,13 +37,11 @@
   right: 0;
   bottom: calc(20px + env(safe-area-inset-bottom));
   z-index: 50;
-
   height: 50px;
   padding: 0 20px 0 18px;
   border: 1px solid rgba(255, 255, 255, 0.7);
   border-left-width: 16px;
   border-radius: 999px 10px 10px 999px;
-
   background-color: #fff;
   color: #000;
 }
@@ -54,18 +52,30 @@
   top: 46%;
   transform: translateY(-50%);
   z-index: 20;
+
   h1 {
     margin: 0;
-    font-size: globals.$HeroHeader;
+    font-size: clamp(2.4rem, 10vw, globals.$HeroHeader);
     line-height: 0.95;
     font-weight: 700;
     color: #fff;
   }
+
   p {
     margin: 0;
-    font-size: globals.$HeaderFour;
+    font-size: clamp(1rem, 3vw, globals.$HeaderFour);
     line-height: 0.95;
     font-weight: 700;
     color: #fff;
+  }
+}
+
+@media (min-width: 768px) {
+  .textContainer {
+    left: 2.5rem;
+  }
+
+  .splashButton {
+    right: 1.5rem;
   }
 }
