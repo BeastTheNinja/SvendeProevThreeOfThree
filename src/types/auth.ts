@@ -9,6 +9,8 @@ export type RegisterCredentials = {
   name: string;
   email: string;
   password: string;
+  description: string;
+  imageId: number;
   isActive: boolean;
 };
 
@@ -22,11 +24,6 @@ export type RegisterResponse = {
   id: number;
   firstname: string;
   lastname: string;
-  address: string;
-  zipcode: number;
-  city: string;
   email: string;
-  hasNewsletter: boolean;
-  hasNotification: boolean;
 
 };

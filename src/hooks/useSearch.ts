@@ -1,26 +1,25 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
-function useSearch<T>(
-  items: T[],
-  searchFields: (keyof T)[]
-) {
-  const [search, setSearch] = useState("");
-
-  const filteredItems = useMemo(() => {
-    if (!search.trim()) {
-      return items;
+function getNestedValue(item: unknown, path: string): string {
+  return path.split(".").reduce<unknown>((current, key) => {
+    if (current && typeof current === "object" && key in current) {
+      return (current as Record<string, unknown>)[key];
     }
 
-    const searchTerm = search.toLowerCase();
+    return "";
+  }, item) as string;
+}
 
-    return items.filter((item) =>
-      searchFields.some((field) =>
-        String(item[field])
-          .toLowerCase()
-          .includes(searchTerm)
-      )
-    );
-  }, [items, search, searchFields]);
+function useSearch<T>(items: T[], searchFields: string[]) {
+  const [search, setSearch] = useState("");
+
+  const filteredItems = items.filter((item) =>
+    searchFields.some((field) => {
+      const value = getNestedValue(item, field);
+
+      return String(value).toLowerCase().includes(search.toLowerCase());
+    })
+  );
 
   return {
     search,

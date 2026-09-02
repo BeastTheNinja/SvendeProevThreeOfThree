@@ -3,9 +3,12 @@ export type TeamImage = {
 };
 
 export type TeamUser = {
-    id: number;
+    id?: number;
     name: string;
-    description: string;
+    description?: string;
+    image?: {
+        url: string;
+    };
 };
 
 export type TeamRating =
@@ -17,6 +20,9 @@ export type TeamRating =
 export type Team = {
     id: number;
     name: string;
+    description?: string;
+    day?: string;
+    time?: string;
     image: TeamImage;
     user: TeamUser;
     ratings: TeamRating[];

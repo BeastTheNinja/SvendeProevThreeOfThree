@@ -35,7 +35,9 @@ function Register() {
         name,
         email,
         password,
+        description: "No description yet",
         isActive: true,
+        imageId: 1,
       });
 
       navigate("/login");
