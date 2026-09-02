@@ -12,6 +12,7 @@ export type RegisterCredentials = {
   description: string;
   imageId: number;
   isActive: boolean;
+  refreshToken?: string;
 };
 
 export type AuthResponse = {

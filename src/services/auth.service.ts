@@ -9,6 +9,14 @@ import type {
 
 const cookies = new Cookies();
 
+function generateRefreshToken(): string {
+  if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
+    return crypto.randomUUID();
+  }
+
+  return `refresh_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+}
+
 export async function login(credentials: LoginCredentials) {
   const response = await api<AuthResponse>("/api/auth/login", {
     method: "POST",
@@ -24,9 +32,14 @@ export async function login(credentials: LoginCredentials) {
 export async function register(
   credentials: RegisterCredentials
 ) {
+  const refreshToken = generateRefreshToken();
+
   return api<RegisterResponse>("/api/users", {
     method: "POST",
-    body: JSON.stringify(credentials),
+    body: JSON.stringify({
+      ...credentials,
+      refreshToken,
+    }),
   });
 }
 
